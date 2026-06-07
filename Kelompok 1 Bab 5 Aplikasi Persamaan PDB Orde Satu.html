@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAB 5 - Aplikasi Persamaan Diferensial Orde Satu | Materi + Latihan Interaktif</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #eef2f7;
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+            padding: 28px 20px;
+        }
+        .slide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 36px;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+        .slide-inner {
+            padding: 32px 38px;
+        }
+        .content-block {
+            margin: 20px 0;
+            padding: 16px 22px;
+            background: #fafcff;
+            border-radius: 24px;
+            border-left: 6px solid #2c7da0;
+            font-size: 1rem;
+            line-height: 1.65;
+            color: #1e2f3c;
+        }
+        .math-block {
+            background: #eef3fc;
+            border-left-color: #0f5b7a;
+            overflow-x: auto;
+        }
+        .interactive-area {
+            background: #fffdf7;
+            border-left: 6px solid #f4a261;
+        }
+        button {
+            font-family: inherit;
+            font-weight: 600;
+            border: none;
+            border-radius: 40px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .nav-btn {
+            background: #2c7da0;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 48px;
+            margin: 0 8px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+        .nav-btn:hover { background: #1f5e7a; transform: scale(1.02); }
+        .slide-indicator {
+            text-align: center;
+            margin-top: 20px;
+            color: #2c6079;
+            font-weight: 500;
+        }
+        .nav-area {
+            text-align: center;
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+        h2, h3, h4 { color: #0f3b4f; margin: 0.5rem 0 0.8rem; }
+        hr { margin: 16px 0; border-color: #dce5f0; }
+        .answer-input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 48px;
+            border: 1.5px solid #cbd5e1;
+            font-size: 1rem;
+            margin: 12px 0;
+        }
+        .answer-input.correct {
+            border-color: #2b7a3e;
+            background: #e9f7ef;
+        }
+        .answer-input.incorrect {
+            border-color: #c7362b;
+            background: #fff0ef;
+        }
+        .check-btn {
+            background: #2c7da0;
+            color: white;
+            padding: 10px 26px;
+            border-radius: 40px;
+            margin-right: 10px;
+        }
+        .feedback-msg {
+            margin-top: 16px;
+            padding: 12px 18px;
+            border-radius: 28px;
+            font-weight: 500;
+        }
+        .feedback-msg.correct { background: #e0f7ea; color: #14532d; border-left: 5px solid #2e7d32; }
+        .feedback-msg.incorrect { background: #ffeae8; color: #a51b0e; border-left: 5px solid #d32f2f; }
+        .flex-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+        .mcq-option, .tf-btn {
+            background: #eef2f8;
+            color: #1e2f3e;
+            margin: 6px 8px 6px 0;
+            border-radius: 40px;
+            padding: 8px 18px;
+        }
+        .mcq-option.selected { outline: 3px solid #2c7da0; background: #ddeeff; }
+        .mcq-option.correct, .tf-btn.correct { background: #c8f0d1 !important; outline: 2px solid #2b7a3e; }
+        .mcq-option.incorrect, .tf-btn.incorrect { background: #ffe0db !important; outline: 2px solid #c7362b; }
+    </style>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            startup: { typeset: false }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="slide-container">
+    <div class="slide-inner" id="slide-content"></div>
+</div>
+<div class="nav-area">
+    <button id="prev-btn" class="nav-btn" style="background:#547a8c;">← Sebelumnya</button>
+    <button id="next-btn" class="nav-btn">Selanjutnya →</button>
+</div>
+<p id="slide-indicator" class="slide-indicator">Memuat...</p>
+
+<script>
+    // ========== MATERI PERSIS PDF + 10 LATIHAN SOAL INTERAKTIF (SEMUA RUMUS RAPI) ==========
+    const slides = [
+        // ---- MATERI DARI PDF (HALAMAN 1-53) ----
+        { type: 'content', blocks: [ { html: `<h2 style="text-align:center;">BAB 5</h2><h1 style="text-align:center; font-size:2rem;">Aplikasi Persamaan Diferensial Orde Satu</h1><p style="text-align:center;">Kelompok 1</p><hr>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `<h3>Nama Anggota:</h3><ul><li>Firkhan Rantata Ainussiva (240210101009)</li><li>Ghaluh Satrio Purwanto (240210101016)</li><li>Amaliatus Sholihah (240210101022)</li><li>Cycha Dwi Aprilia (240210101028)</li><li>Jeni She Amenda (240210101092)</li><li>Arif Hidayat (240210101093)</li><li>Syifa’ Maisyatul ’Izza (240210101131)</li><li>Indri Rahayu (240210101141)</li></ul>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `<h3>5.1 Hukum Pendinginan Newton</h3><p><em>"Sebuah benda panas yang ditempatkan dalam media yang lebih dingin akan mengalami pendinginan dengan laju yang sebanding dengan selisih suhu antara benda dengan suhu sekelilingnya, dan sebaliknya".</em></p>`, cls: '' }, { html: `\\[ \\frac{dT}{dt} = -k(T - T_s) \\]`, cls: 'math-block' }, { html: `<p>T = temperatur benda, t = waktu, T<sub>s</sub> = suhu lingkungan, k = konstanta</p>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Contoh 5.1</h4><p>Sebuah cangkir kopi panas bersuhu 90°C diletakkan di dalam ruangan ber-AC dengan suhu konstan 25°C. Setelah 5 menit, suhu kopi turun menjadi 60°C. Berapa lama waktu yang diperlukan hingga suhu kopi turun menjadi 30°C?</p>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `Karena \\( T_s = 25 \\), maka:`, cls: '' }, { html: `\\[ \\frac{dT}{dt} = -k(T - 25) \\]`, cls: 'math-block' }, { html: `Bentuk persamaan diferensial linearnya:`, cls: '' }, { html: `\\[ \\frac{dT}{dt} + kT = 25k \\]`, cls: 'math-block' }, { html: `Ini adalah PD linier nonhomogen orde satu dengan \\( p = k \\).`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `\\( h = \\int p \\, dt = \\int k \\, dt = kt \\)`, cls: 'math-block' }, { html: `Faktor integrasi: \\( e^{h} = e^{kt} \\)`, cls: '' }, { html: `Solusi umum:`, cls: '' }, { html: `\\[ T = e^{-h} \\left[ \\int e^{h} r \\, dt + C \\right] \\]`, cls: 'math-block' }, { html: `\\[ T = e^{-kt} \\left[ \\int 25k e^{kt} dt + C \\right] \\]`, cls: 'math-block' }, { html: `\\[ T = e^{-kt} \\left[ 25 e^{kt} + C \\right] \\]`, cls: 'math-block' }, { html: `\\[ T = 25 + C e^{-kt} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `Menentukan solusi khusus:`, cls: '' }, { html: `\\[ T(0) = 90 \\rightarrow 90 = 25 + C e^{0} \\rightarrow 90 = 25 + C \\rightarrow C = 65 \\]`, cls: 'math-block' }, { html: `\\[ T(t) = 25 + 65 e^{-kt} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `Diketahui setelah 5 menit suhu menjadi 60°C:`, cls: '' }, { html: `\\[ T(5) = 60 \\rightarrow 60 = 25 + 65 e^{-5k} \\rightarrow 35 = 65 e^{-5k} \\]`, cls: 'math-block' }, { html: `\\[ \\frac{35}{65} = e^{-5k} \\rightarrow \\frac{7}{13} = e^{-5k} \\]`, cls: 'math-block' }, { html: `\\[ \\ln\\left(\\frac{7}{13}\\right) = \\ln(e^{-5k}) \\rightarrow \\ln\\frac{7}{13} = -5k \\]`, cls: 'math-block' }, { html: `\\[ k = -\\frac{1}{5} \\ln\\left(\\frac{7}{13}\\right) = \\frac{1}{5} \\ln\\left(\\frac{13}{7}\\right) \\approx 0,124 \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `Mencari waktu saat suhu menjadi 30°C:`, cls: '' }, { html: `\\[ 30 = 25 + 65 e^{-0,124 t} \\rightarrow 5 = 65 e^{-0,124 t} \\rightarrow \\frac{5}{65} = e^{-0,124 t} \\rightarrow \\frac{1}{13} = e^{-0,124 t} \\]`, cls: 'math-block' }, { html: `\\[ \\ln\\left(\\frac{1}{13}\\right) = -0,124 t \\rightarrow t = \\frac{\\ln(1/13)}{-0,124} \\]`, cls: 'math-block' }, { html: `\\[ t = \\frac{-2,5649}{-0,124} \\approx 21,37 \\text{ menit} \\]`, cls: 'math-block' }, { html: `<strong>Jadi waktu yang dibutuhkan hingga suhu kopi menjadi 30°C adalah 21,37 menit.</strong>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Soal Bola Tembaga</h4><p>Sebuah bola tembaga dipanaskan pada suhu 100°C, pada saat t = 0 benda tersebut ditempatkan dalam air yang dipertahankan pada 30°C. Di akhir menit ke-3 temperatur bola berkurang menjadi 70°C. Tentukan waktu yang dibutuhkan agar temperatur bola berkurang menjadi 31°C.</p>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `Suhu lingkungan: \\( T_a = 30^\\circ C \\)`, cls: '' }, { html: `Hukum pendinginan Newton: \\( \\frac{dT}{dt} = -k(T - 30) \\)`, cls: 'math-block' }, { html: `Pemisahan variabel: \\( \\frac{dT}{T-30} = -k dt \\)`, cls: '' }, { html: `\\[ \\ln|T-30| = -kt + C \\rightarrow T-30 = Ce^{-kt} \\rightarrow T = 30 + Ce^{-kt} \\]`, cls: 'math-block' }, { html: `Substitusi t = 0, T = 100: \\( 100 = 30 + C \\rightarrow C = 70 \\)`, cls: '' }, { html: `\\[ T = 30 + 70 e^{-kt} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `Menentukan nilai k (t = 3, T = 70):`, cls: '' }, { html: `\\[ 70 = 30 + 70 e^{-3k} \\rightarrow 40 = 70 e^{-3k} \\rightarrow \\frac{40}{70} = e^{-3k} \\rightarrow \\frac{4}{7} = e^{-3k} \\]`, cls: 'math-block' }, { html: `\\[ \\ln\\left(\\frac{4}{7}\\right) = -3k \\rightarrow k = -\\frac{1}{3} \\ln\\left(\\frac{4}{7}\\right) \\approx 0,187 \\]`, cls: 'math-block' }, { html: `\\[ T = 30 + 70 e^{-0,187 t} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `Mencari t saat T = 31°C:`, cls: '' }, { html: `\\[ 31 = 30 + 70 e^{-0,187 t} \\rightarrow 1 = 70 e^{-0,187 t} \\rightarrow \\frac{1}{70} = e^{-0,187 t} \\]`, cls: 'math-block' }, { html: `\\[ \\ln\\left(\\frac{1}{70}\\right) = -0,187 t \\rightarrow t = \\frac{-\\ln(1/70)}{0,187} \\approx 22,775 \\text{ menit} \\]`, cls: 'math-block' }, { html: `<strong>Waktu yang dibutuhkan agar suhu bola menjadi 31°C adalah 22,775 menit.</strong>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Contoh 5.3</h4><p>Suatu benda dengan suhu 80°C diletakkan di ruang yang bersuhu 50°C pada saat t = 0. Dalam waktu 5 menit suhu benda tersebut menjadi 70°C, maka</p><p>(a) Tentukan fungsi suhu pada saat tertentu<br>(b) Tentukan besarnya suhu benda pada 10 menit terakhir<br>(c) Kapan suhu menjadi 60°C</p>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `Persamaan diferensial: \\( \\frac{dT}{dt} = k(T - 50) \\)`, cls: 'math-block' }, { html: `Pemisahan variabel: \\( \\frac{dT}{T-50} = k dt \\) → \\( \\ln(T-50) = kt + C \\) → \\( T-50 = Ce^{kt} \\) → \\( T = 50 + Ce^{kt} \\)`, cls: 'math-block' }, { html: `t = 0, T = 80 → \\( 80 = 50 + C \\rightarrow C = 30 \\)`, cls: '' }, { html: `t = 5, T = 70 → \\( 70 = 50 + 30 e^{5k} \\rightarrow 20 = 30 e^{5k} \\rightarrow \\frac{2}{3} = e^{5k} \\)`, cls: '' }, { html: `\\[ T(t) = 50 + 30 \\left(\\frac{2}{3}\\right)^{t/5} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `(b) Suhu pada 10 menit: \\( t = 10 \\)`, cls: '' }, { html: `\\[ T(10) = 50 + 30 \\left(\\frac{2}{3}\\right)^{10/5} = 50 + 30 \\left(\\frac{2}{3}\\right)^2 = 50 + 30 \\cdot \\frac{4}{9} = 50 + \\frac{120}{9} = 50 + 13,33 = 63,33^\\circ C \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `(c) Waktu saat suhu 60°C:`, cls: '' }, { html: `\\[ 60 = 50 + 30 \\left(\\frac{2}{3}\\right)^{t/5} \\rightarrow 10 = 30 \\left(\\frac{2}{3}\\right)^{t/5} \\rightarrow \\frac{1}{3} = \\left(\\frac{2}{3}\\right)^{t/5} \\]`, cls: 'math-block' }, { html: `\\[ \\ln\\left(\\frac{1}{3}\\right) = \\frac{t}{5} \\ln\\left(\\frac{2}{3}\\right) \\rightarrow t = 5 \\cdot \\frac{\\ln(1/3)}{\\ln(2/3)} \\approx 13,55 \\text{ menit} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `<h3>5.5 Pertumbuhan Eksponensial (Hukum Maltus)</h3><p><em>"Laju pertumbuhan populasi sebanding dengan jumlah populasi pada saat itu".</em></p>`, cls: '' }, { html: `\\[ \\frac{dP}{dt} = kP \\quad\\Rightarrow\\quad P(t) = P_0 e^{kt} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Contoh 5.3 (Pertumbuhan Eksponensial)</h4><p>Suatu populasi bakteri berkembang menurut Hukum Maltus. Mula-mula terdapat 40000 bakteri dan setelah 100 hari populasi berkembang menjadi 75000 bakteri. Tentukan jumlah populasi bakteri setelah 200 hari.</p>`, cls: '' }, { html: `\\[ \\frac{dP}{dt} = kP \\rightarrow P = Ce^{kt} \\]`, cls: 'math-block' }, { html: `t = 0, P = 40000 → \\( C = 40000 \\)`, cls: '' }, { html: `t = 100, P = 75000 → \\( 75000 = 40000 e^{100k} \\rightarrow e^{100k} = 1,875 \\rightarrow k = \\frac{\\ln 1,875}{100} \\)`, cls: '' }, { html: `t = 200 → \\( P(200) = 40000 e^{200k} = 40000 \\cdot (1,875)^2 = 40000 \\cdot 3,515625 = 140625 \\) (menurut PDF ≈115600)`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Contoh 5.4</h4><p>Jumlah bakteri dalam suatu kultur adalah 10.000, setelah dua jam menjadi 40.000. Di bawah persyaratan perkembangan yang ideal, menjadi berapakah jumlah bakteri setelah lima jam?</p>`, cls: '' }, { html: `\\[ \\frac{dy}{dt} = ky \\rightarrow y = Ce^{kt} \\]`, cls: 'math-block' }, { html: `t = 0, y = 10000 → \\( C = 10000 \\)`, cls: '' }, { html: `t = 2, y = 40000 → \\( 40000 = 10000 e^{2k} \\rightarrow e^{2k} = 4 \\rightarrow k = \\ln 2 \\)`, cls: '' }, { html: `t = 5 → \\( y(5) = 10000 e^{5 \\ln 2} = 10000 \\cdot 2^5 = 10000 \\cdot 32 = 320.000 \\) bakteri`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `<h3>5.6 Peluruhan Bahan Radioaktif</h3><p><em>"Laju peluruhan suatu zat radioaktif sebanding dengan jumlah inti atom yang belum meluruh pada waktu tertentu".</em></p>`, cls: '' }, { html: `\\[ \\frac{dN}{dt} = -kN \\quad\\Rightarrow\\quad N(t) = N_0 e^{-kt} \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Contoh Uranium</h4><p>Diketahui waktu paruh Uranium adalah 68 tahun. Artinya setelah 68 tahun, jumlah bahan tinggal setengah dari jumlah semula.</p>`, cls: '' }, { html: `\\[ N(68) = \\frac{1}{2} N_0 = N_0 e^{-68k} \\rightarrow \\frac{1}{2} = e^{-68k} \\rightarrow \\ln\\left(\\frac{1}{2}\\right) = -68k \\rightarrow k = \\frac{\\ln 2}{68} \\]`, cls: 'math-block' }, { html: `\\[ N(t) = N_0 e^{-(\\ln 2 /68) t} = N_0 \\cdot 2^{-t/68} \\]`, cls: 'math-block' }, { html: `Persentase sisa setelah 1 tahun: \\( \\frac{N(1)}{N_0} = 2^{-1/68} \\approx 0,99 = 99\\% \\)`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `<h4>Radioaktif isotop Thorium–234</h4><p>Radioaktif isotop Thorium–234 meluruh pada tingkat yang sebanding dengan jumlah isotopnya, jika 100 mg material meluruh menjadi 82,04 mg dalam satu minggu, maka:</p><p>1. Tentukan ekspresi jumlah pada saat tertentu</p><p>2. Tentukan interval waktu sehingga isotop meluruh menjadi setengah jumlah semula</p>`, cls: '' } ] },
+        { type: 'content', blocks: [ { html: `Model: \\( \\frac{dN}{dt} = -kN \\) → \\( N(t) = N_0 e^{-kt} \\)`, cls: 'math-block' }, { html: `Diketahui \\( N(0) = 100 \\) mg, \\( N(7) = 82,04 \\) mg.`, cls: '' }, { html: `\\[ 82,04 = 100 e^{-7k} \\rightarrow e^{-7k} = 0,8204 \\rightarrow -7k = \\ln(0,8204) \\rightarrow k = -\\frac{\\ln(0,8204)}{7} \\approx 0,02829 \\]`, cls: 'math-block' }, { html: `\\[ N(t) = 100 e^{-0,02829 t} \\quad (t \\text{ dalam hari}) \\]`, cls: 'math-block' } ] },
+        { type: 'content', blocks: [ { html: `Setengah jumlah semula: 50 mg.`, cls: '' }, { html: `\\[ 50 = 100 e^{-0,02829 t} \\rightarrow 0,5 = e^{-0,02829 t} \\rightarrow \\ln(0,5) = -0,02829 t \\]`, cls: 'math-block' }, { html: `\\[ t = \\frac{\\ln(0,5)}{-0,02829} \\approx 24,20 \\text{ hari} \\]`, cls: 'math-block' }, { html: `<strong>Jadi waktu paruh Thorium-234 sekitar 24,20 hari.</strong>`, cls: '' } ] },
+        // ========== 10 LATIHAN SOAL INTERAKTIF ==========
+        { type: 'exercise_num', title: 'Latihan Soal 1: Besi Panas', 
+          question: 'Sebuah besi yang memiliki temperatur 200°C dicelupkan dalam air yang memiliki temperatur tetap sebesar 40°C. Temperatur benda turun dari 200°C menjadi 150°C selama 5 detik. Berapa waktu yang dibutuhkan agar temperatur besi menjadi 100°C? (Gunakan model \\( T(t)=40+160e^{-kt} \\))',
+          correct: 13.1, tolerance: 0.2, unit: 'detik' },
+        { type: 'exercise_pop', title: 'Latihan Soal 2: Penduduk Dunia',
+          question: 'Jumlah penduduk dunia pada tahun 1990 adalah 4.5 milyar dan bertambah secara eksponensial dengan konstanta \\( C = \\frac{\\ln 3}{8} \\). a. Berapa perkiraan jumlah penduduk dunia pada tahun 2012? b. Berapa perkiraan pada tahun 2016? (Jawab dalam milyar, dua desimal)',
+          correctA: 92.34, correctB: 159.9, tolerance: 0.5 },
+        { type: 'mcq', question: 'Hukum pendinginan Newton menyatakan laju perubahan suhu benda sebanding dengan...',
+          options: ['Suhu benda itu sendiri', 'Selisih suhu benda dengan suhu lingkungan', 'Kuadrat suhu benda', 'Suhu lingkungan saja'], correct: 1 },
+        { type: 'mcq', question: 'Solusi umum dari persamaan peluruhan radioaktif \\( \\frac{dN}{dt} = -kN \\) adalah...',
+          options: ['\\( N(t) = N_0 e^{kt} \\)', '\\( N(t) = N_0 e^{-kt} \\)', '\\( N(t) = N_0 + kt \\)', '\\( N(t) = \\frac{N_0}{1+kt} \\)'], correct: 1 },
+        { type: 'tf', statement: 'Pada pertumbuhan eksponensial (Hukum Maltus), laju pertumbuhan populasi berbanding terbalik dengan jumlah populasi.', correct: false },
+        { type: 'exercise_num', title: 'Latihan Soal 3: Konstanta Pendinginan',
+          question: 'Sebuah benda bersuhu 100°C ditempatkan di ruang bersuhu 20°C. Setelah 10 menit suhu benda menjadi 60°C. Hitung konstanta k (dalam 1/menit, 3 desimal, dengan tanda negatif). Petunjuk: \\( T(t)=20+80e^{kt} \\).',
+          correct: -0.0693, tolerance: 0.001, unit: '' },
+        { type: 'exercise_num', title: 'Latihan Soal 4: Waktu Paruh',
+          question: 'Suatu zat radioaktif memiliki waktu paruh 50 tahun. Berapa persen zat yang tersisa setelah 150 tahun? (Jawab dalam persen, bulatkan ke bilangan bulat)',
+          correct: 12.5, tolerance: 0.5, unit: '%' },
+        { type: 'mcq', question: 'Jika populasi bakteri berlipat ganda setiap 3 jam, dan awalnya 1000 bakteri, berapa jumlah setelah 9 jam?',
+          options: ['3000', '6000', '8000', '10000'], correct: 2 },
+        { type: 'exercise_num', title: 'Latihan Soal 5: Pendinginan Kopi',
+          question: 'Kopi bersuhu 95°C diletakkan di ruang 25°C. Jika konstanta pendinginan k = 0,15 per menit, berapa menit waktu yang diperlukan agar suhu kopi menjadi 40°C? (Gunakan \\( T(t)=25+70e^{-0,15t} \\))',
+          correct: 9.2, tolerance: 0.3, unit: 'menit' },
+        { type: 'mcq', question: 'Model matematika untuk Hukum Maltus adalah...',
+          options: ['\\( \\frac{dP}{dt} = -kP \\)', '\\( \\frac{dP}{dt} = kP \\)', '\\( \\frac{dP}{dt} = k \\)', '\\( \\frac{dP}{dt} = \\frac{k}{P} \\)'], correct: 1 },
+        { type: 'content', blocks: [ { html: `<div style="text-align:center; padding: 30px 10px;"><h2>Terima Kasih</h2><p>BAB 5 - Aplikasi Persamaan Diferensial Orde Satu</p><p>Kelompok 1</p><hr></div>`, cls: '' } ] }
+    ];
+
+    // State dan fungsi render
+    let currentSlide = 0, revealedBlocks = 1, interactiveAnswered = false;
+    const slideContainer = document.getElementById('slide-content');
+    const indicator = document.getElementById('slide-indicator');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+
+    function updateIndicator() { indicator.textContent = `Slide ${currentSlide+1} / ${slides.length}`; prevBtn.disabled = (currentSlide===0); prevBtn.style.opacity = (currentSlide===0)?"0.5":"1"; }
+    async function typesetMath() { if(window.MathJax && window.MathJax.typesetPromise) await window.MathJax.typesetPromise([slideContainer]); }
+
+    function renderContentBlocks(slide) {
+        slideContainer.innerHTML = '';
+        const blocks = slide.blocks.slice(0, revealedBlocks);
+        blocks.forEach(b => { const div = document.createElement('div'); div.className = `content-block ${b.cls || ''}`; div.innerHTML = b.html; slideContainer.appendChild(div); });
+        if (revealedBlocks >= slide.blocks.length) interactiveAnswered = true;
+    }
+    async function renderExerciseNum(ex) {
+        slideContainer.innerHTML = `<div class="content-block interactive-area"><h4>${ex.title}</h4><p>${ex.question}</p><input type="text" id="numInput" class="answer-input" placeholder="Masukkan jawaban angka ..."><button id="checkBtn" class="check-btn">Periksa</button><div id="feedback" class="feedback-msg" style="display:none;"></div></div>`;
+        await typesetMath();
+        const inp = document.getElementById('numInput'), btn = document.getElementById('checkBtn'), fb = document.getElementById('feedback');
+        btn.onclick = () => {
+            if (interactiveAnswered) return;
+            let val = parseFloat(inp.value.replace(',','.')), ok = !isNaN(val) && Math.abs(val - ex.correct) <= ex.tolerance;
+            interactiveAnswered = true; inp.classList.add(ok?'correct':'incorrect');
+            fb.textContent = ok ? `✅ Benar! Jawaban = ${ex.correct} ${ex.unit}` : `❌ Kurang tepat. Jawaban yang benar ≈ ${ex.correct} ${ex.unit}.`;
+            fb.className = `feedback-msg ${ok?'correct':'incorrect'}`; fb.style.display = 'block'; btn.disabled = true; inp.disabled = true;
+        };
+    }
+    async function renderExercisePop(ex) {
+        slideContainer.innerHTML = `<div class="content-block interactive-area"><h4>${ex.title}</h4><p>${ex.question}</p><p><strong>(a) Tahun 2012 (milyar):</strong> <input type="text" id="ansA" class="answer-input" style="width:45%;"></p><p><strong>(b) Tahun 2016 (milyar):</strong> <input type="text" id="ansB" class="answer-input" style="width:45%;"></p><button id="checkBtn2" class="check-btn">Periksa Kedua Jawaban</button><div id="feedback2" class="feedback-msg" style="display:none;"></div></div>`;
+        await typesetMath();
+        const inpA = document.getElementById('ansA'), inpB = document.getElementById('ansB'), btn = document.getElementById('checkBtn2'), fb = document.getElementById('feedback2');
+        btn.onclick = () => {
+            if (interactiveAnswered) return;
+            let a = parseFloat(inpA.value.replace(',','.')), b = parseFloat(inpB.value.replace(',','.'));
+            let okA = !isNaN(a) && Math.abs(a - ex.correctA) <= ex.tolerance, okB = !isNaN(b) && Math.abs(b - ex.correctB) <= ex.tolerance;
+            interactiveAnswered = true;
+            if (okA && okB) { fb.textContent = `✅ Benar! (a) ≈ ${ex.correctA} milyar, (b) ≈ ${ex.correctB} milyar.`; fb.className = 'feedback-msg correct'; }
+            else { fb.textContent = `❌ Belum tepat. (a) seharusnya ${ex.correctA} milyar, (b) ${ex.correctB} milyar.`; fb.className = 'feedback-msg incorrect'; }
+            fb.style.display = 'block'; btn.disabled = true; inpA.disabled = true; inpB.disabled = true;
+        };
+    }
+    async function renderMCQ(slide) {
+        slideContainer.innerHTML = `<div class="content-block interactive-area"><p><strong>📝 Pilihan Ganda</strong></p><p>${slide.question}</p><div class="flex-buttons">${slide.options.map((opt,idx)=>`<button class="mcq-option" data-opt="${idx}">${String.fromCharCode(65+idx)}. ${opt}</button>`).join('')}</div><div class="feedback-msg" style="display:none;"></div></div>`;
+        await typesetMath();
+        const btns = document.querySelectorAll('.mcq-option'), fb = document.querySelector('.feedback-msg');
+        btns.forEach(btn => { btn.onclick = () => {
+            if (interactiveAnswered) return;
+            const selected = parseInt(btn.dataset.opt); interactiveAnswered = true;
+            btns.forEach(b=>b.classList.remove('selected')); btn.classList.add('selected');
+            if (selected === slide.correct) { btn.classList.add('correct'); fb.textContent = '✅ Jawaban benar!'; fb.className = 'feedback-msg correct'; }
+            else { btn.classList.add('incorrect'); fb.textContent = `❌ Jawaban benar adalah ${String.fromCharCode(65+slide.correct)}.`; fb.className = 'feedback-msg incorrect'; btns.forEach(b=>{if(parseInt(b.dataset.opt)===slide.correct) b.classList.add('correct');}); }
+            fb.style.display = 'block';
+        }; });
+    }
+    async function renderTF(slide) {
+        slideContainer.innerHTML = `<div class="content-block interactive-area"><p><strong>✅❌ Benar/Salah</strong></p><p>${slide.statement}</p><div class="flex-buttons"><button class="tf-btn" data-val="true">✅ Benar</button><button class="tf-btn" data-val="false">❌ Salah</button></div><div class="feedback-msg" style="display:none;"></div></div>`;
+        await typesetMath();
+        const btns = document.querySelectorAll('.tf-btn'), fb = document.querySelector('.feedback-msg');
+        btns.forEach(btn => { btn.onclick = () => {
+            if (interactiveAnswered) return;
+            const val = btn.dataset.val === 'true'; interactiveAnswered = true;
+            btns.forEach(b=>b.classList.remove('correct','incorrect'));
+            if (val === slide.correct) { btn.classList.add('correct'); fb.textContent = '✅ Benar! Pernyataan tersebut SALAH.'; fb.className = 'feedback-msg correct'; }
+            else { btn.classList.add('incorrect'); fb.textContent = '❌ Jawaban benar: Pernyataan SALAH.'; fb.className = 'feedback-msg incorrect'; btns.forEach(b=>{if((b.dataset.val==='true')===slide.correct) b.classList.add('correct');}); }
+            fb.style.display = 'block';
+        }; });
+    }
+    function revealNextBlock() {
+        const slide = slides[currentSlide];
+        if (slide.type === 'content' && revealedBlocks < slide.blocks.length) { revealedBlocks++; renderContentBlocks(slide); typesetMath(); if (revealedBlocks >= slide.blocks.length) interactiveAnswered = true; return true; }
+        return false;
+    }
+    async function renderSlide(index) {
+        const slide = slides[index]; revealedBlocks = 1; interactiveAnswered = false; slideContainer.innerHTML = '';
+        if (slide.type === 'content') { renderContentBlocks(slide); await typesetMath(); }
+        else if (slide.type === 'exercise_num') await renderExerciseNum(slide);
+        else if (slide.type === 'exercise_pop') await renderExercisePop(slide);
+        else if (slide.type === 'mcq') await renderMCQ(slide);
+        else if (slide.type === 'tf') await renderTF(slide);
+        updateIndicator();
+    }
+    function nextSlide() {
+        const slide = slides[currentSlide];
+        if (slide.type === 'content' && revealedBlocks < slide.blocks.length) { revealNextBlock(); return; }
+        if (!interactiveAnswered && (slide.type !== 'content')) { const area = document.querySelector('.interactive-area'); if(area) area.style.animation='shake 0.4s ease'; setTimeout(()=>{if(area) area.style.animation='';},500); return; }
+        if (currentSlide < slides.length-1) { currentSlide++; renderSlide(currentSlide); }
+    }
+    function prevSlide() { if (currentSlide > 0) { currentSlide--; renderSlide(currentSlide); } }
+    nextBtn.onclick = nextSlide; prevBtn.onclick = prevSlide;
+    document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); nextSlide(); } if(e.key==='ArrowLeft'){ e.preventDefault(); prevSlide(); } });
+    renderSlide(0);
+</script>
+</body>
+</html>
